@@ -21,12 +21,19 @@ public class Grenade extends Equipment
 	 * @param range Range (in feet) that weapon is useful in
 	 * @param capacity I'm actually not sure what this is in relation to grenades...
 	 * @param special Special ability
+	 * @throws IllegalArgumentException If there is a problem with the bounds of the inputs
 	 */
 	public Grenade(String name, int level, String bulk, int range, String capacity, String special)
 	{
 		super(name, level, bulk);
+		if(range < 0)
+			throw new IllegalArgumentException("Range must be nonegative");
 		this.range = range;
+		if(capacity.isEmpty())
+			throw new IllegalArgumentException("Capacity must be specified");
 		this.capacity = capacity;
+		if(special.isEmpty())
+			special = "-";
 		this.special = special;
 	}
 

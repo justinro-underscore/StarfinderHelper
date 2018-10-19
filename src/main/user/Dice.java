@@ -22,6 +22,7 @@ public class Dice
 	 * Creates a new Dice object
 	 * @param count Amount of dice to be rolled
 	 * @param dieType Type of dice to be rolled
+	 * @throws IllegalArgumentException If there is a problem with the inputs
 	 */
 	public Dice(int count, int dieType) { this("" + count + "d" + dieType); }
 
@@ -29,6 +30,7 @@ public class Dice
 	/**
 	 * Creates a new Dice object
 	 * @param die The die in string form \"\d+d\d+"\
+	 * @throws IllegalArgumentException If there is a problem with the format or content of the input string
 	 */
 	public Dice(String die)
 	{

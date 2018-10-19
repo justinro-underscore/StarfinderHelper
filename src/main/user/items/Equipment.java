@@ -47,6 +47,7 @@ public class Equipment
 	 * @param level Required level
 	 * @param bulk Bulk
 	 * @param count How many of the equipment user has
+	 * @throws IllegalArgumentException If there is a problem with the bounds of the inputs
 	 */
 	public Equipment(String name, int level, String bulk, int count)
 	{
@@ -75,6 +76,7 @@ public class Equipment
 	/**
 	 * Increments the amount of this equipment that the user has by specified amount
 	 * @param c Amount to increment by, CAN BE NEGATIVE
+	 * @throws RuntimeException If the count of the equipment reaches 0
 	 */
 	public void incrementCount(int c)
 	{
@@ -89,7 +91,8 @@ public class Equipment
 	public void incrementCount() { count++; }
 
 	/**
-	 *	Decrements the amount of this equipment that the user has by 1
+	 * Decrements the amount of this equipment that the user has by 1
+	 * @throws RuntimeException If the count of the equipment hits 0
 	 */
 	public void decrementCount()
 	{
@@ -166,6 +169,7 @@ public class Equipment
 		/**
 		 * Create a bulk object
 		 * @param w The weight of the equipment (could be L)
+		 * @throws IllegalArgumentException If there is a problem with the weight input
 		 */
 		public Bulk(String w)
 		{

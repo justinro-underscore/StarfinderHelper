@@ -2,6 +2,7 @@ package main.user;
 
 import java.util.ArrayList;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import main.user.items.Equipment;
 import utils.Tuple;
 
@@ -15,7 +16,7 @@ import utils.Tuple;
 public class Player
 {
 	private String name; // Name of the player
-	private int credits; // How many credits the player has
+	private SimpleIntegerProperty credits; // How many credits the player has
 	private ArrayList<Equipment> equipment = new ArrayList<Equipment>(); // The inventory of the player
 
 	/**
@@ -25,7 +26,7 @@ public class Player
 	public Player(String n)
 	{
 		name = n;
-		credits = 0;
+		credits = new SimpleIntegerProperty(0);
 	}
 
 	/**
@@ -35,10 +36,30 @@ public class Player
 	public String getName() { return name; }
 
 	/**
+	 *
+	 * @return
+	 */
+	public void addCredits(int c)
+	{
+		int creds = credits.get();
+		creds += c;
+		if(creds < 0)
+			credits.set(0);
+		else
+			credits.set(creds);
+	}
+
+	/**
 	 * Gets the amount of credits player has
 	 * @return Wealth of player
 	 */
-	public int getCredits() { return credits; }
+	public int getCredits() { return credits.get(); }
+
+	/**
+	 * Gets the amount of credits player has as a SimpleIntegerProperty
+	 * @return Wealth of player as SimpleIntegerProperty
+	 */
+	public SimpleIntegerProperty getCreditsProp() { return credits; }
 
 	/**
 	 * Gets how much the player is carrying

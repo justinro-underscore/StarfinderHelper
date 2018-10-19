@@ -26,13 +26,22 @@ public class RangedWeapon extends Weapon
 	 * @param usage How much ammo is used per shot
 	 * @param capacity Max capacity
 	 * @param ammoType Ammo type
+	 * @throws IllegalArgumentException If there is a problem with the bounds of the inputs
 	 */
 	public RangedWeapon(String name, int level, int bulk, String damage, String critical, String special, int range, int usage, int capacity, String ammoType)
 	{
 		super(name, level, "" + bulk, damage, critical, special);
+		if(range < 0)
+			throw new IllegalArgumentException("Range must be nonegative");
 		this.range = range;
+		if(usage < 0)
+			throw new IllegalArgumentException("Usage must be nonegative");
 		this.usage = usage;
+		if(capacity < 0)
+			throw new IllegalArgumentException("Capacity must be nonegative");
 		this.capacity = capacity;
+		if(ammoType.isEmpty())
+			throw new IllegalArgumentException("Ammo Type must be specified");
 		this.ammoType = ammoType;
 	}
 

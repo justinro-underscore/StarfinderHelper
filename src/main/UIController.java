@@ -1,8 +1,18 @@
 package main;
 
+import javafx.application.Application;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import main.user.Player;
-import main.user.items.Equipment;
-import main.user.items.RangedWeapon;
 
 /**
  * Controls the user interaction for StarFinderHelper
@@ -11,34 +21,93 @@ import main.user.items.RangedWeapon;
  * @since October 5, 2018
  */
 
-public class UIController
+public class UIController extends Application
 {
+	private Player player;
+
+	@FXML Label lblPlayerName;
+	@FXML Label lblCurrPage;
+	private Image arrow = new Image("file:res/arrow.png");
+	@FXML private ImageView imgLeft;
+	@FXML private ImageView imgRight;
+
+	@FXML protected GridPane grdEquipment;
+	@FXML protected Label lblPlayerCredits;
+	@FXML protected TextField txtCredits;
+	@FXML protected Button btnAddCredits;
+	@FXML protected Button btnRemCredits;
+
+	@FXML protected Button btnAddEquipment;
+	@FXML protected Button btnRemEquipment;
+
 	/**
-	 * For now, being used to test
-	 * @param args
+	 * Where the application launches from
+	 * @param args What is passed in (don't worry about this)
 	 */
 	public static void main(String[] args)
 	{
-		Player p = new Player("Justin");
+		launch(args);
+	}
 
-		Equipment test1 = new Equipment("Test2", 1, "L", 22);
-		p.addItem(test1);
-		System.out.println(p.getBulk());
+	/**
+	 * Where the application launches from
+	 * @throws IOException If an input or output exception occurred
+	 */
 
-		Equipment test10 = new Equipment("Test1", 1, 10);
-		Equipment test2 = new Equipment("Test2", 1, 2);
-		p.addItem(test10);
-		p.addItem(test2);
-		Equipment test3 = new Equipment("Test2", 1, 2, 6);
-		p.addItem(test3);
-		System.out.println(p.getBulk());
-		Equipment test4 = new Equipment("Test4", 1, "L", 15);
-		p.addItem(test4);
-		System.out.println(p.getBulk());
-		Equipment test5 = new Equipment("Test5", 1, "L", 17);
-		p.addItem(test5);
-		RangedWeapon sr = new RangedWeapon("Thunderstrike Street Sweeper", 7, 2, "1d10 So", "Knockdown", "Boost 1d6", 50, 5, 40, "charges");
-		p.addItem(sr);
-		System.out.println(p.getBulk());
+	@Override
+	public void start(Stage arg0) throws Exception
+	{
+		FXMLLoader load = new FXMLLoader(getClass().getResource("StarfinderUI.fxml")); // You may have to change the path in order to access StarfinderUI.fxml
+		load.setController(this); // Makes it so that you can control the UI using this class
+
+		Parent root = (Parent) load.load();
+		Scene scene = new Scene(root);
+
+		// Start the application
+		Stage stage = new Stage();
+		stage.setTitle("Starfinder Helper");
+		stage.setScene(scene);
+		initializeVariables();
+		initializeUI();
+
+		stage.show();
+	}
+
+	private void initializeVariables()
+	{
+		player = new Player("Jonh");
+	}
+
+	/**
+	 * Initializes all aspects of the UI
+	 */
+	private void initializeUI()
+	{
+		lblPlayerName.setText("Jonh");
+		lblPlayerCredits.textProperty().bind(player.getCreditsProp().asString());
+		lblCurrPage.setText("Equipment");
+		imgLeft.setImage(arrow);
+		imgRight.setImage(arrow);
+
+		btnAddCredits.setOnAction(e -> {
+			String creds = txtCredits.getText().trim();
+			if(creds.isEmpty())
+				player.addCredits(1);
+			else
+			{
+				try { player.addCredits(Integer.parseInt(creds)); }
+				catch(NumberFormatException e1) {}
+			}
+		});
+		btnRemCredits.setOnAction(e -> {
+			String creds = txtCredits.getText().trim();
+			if(creds.isEmpty())
+				player.addCredits(-1);
+			else
+			{
+				try { player.addCredits(-1 * Integer.parseInt(creds)); }
+				catch(NumberFormatException e1) {}
+			}
+		});
 	}
 }

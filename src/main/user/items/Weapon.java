@@ -49,6 +49,7 @@ public abstract class Weapon extends Equipment
 	 * @param damage Damage
 	 * @param critical Critical ability
 	 * @param special Special ability
+	 * @throws IllegalArgumentException If there is a problem with the bounds or content of any of the inputs
 	 */
 	public Weapon(String name, int level, String bulk, String damage, String critical, String special)
 	{
@@ -75,7 +76,11 @@ public abstract class Weapon extends Equipment
 			damageTypes[1] = split[3];
 		}
 
+		if(critical.isEmpty())
+			critical = "-";
 		this.critical = critical;
+		if(special.isEmpty())
+			special = "-";
 		this.special = special;
 	}
 
