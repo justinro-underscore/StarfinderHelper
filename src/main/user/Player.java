@@ -50,6 +50,18 @@ public class Player
 	}
 
 	/**
+	 * Sets the credits amount to c (cannot be undone)
+	 * @param The amount of credits to set to
+	 */
+	public void setCredits(int c)
+	{
+		if(c < 0)
+			credits.set(0);
+		else
+			credits.set(c);
+	}
+
+	/**
 	 * Gets the amount of credits player has
 	 * @return Wealth of player
 	 */
